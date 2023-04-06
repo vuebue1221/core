@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { downloadProject } from './download/download'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, defineEmits, computed } from 'vue'
 import Sun from './icons/Sun.vue'
 import Moon from './icons/Moon.vue'
 import Share from './icons/Share.vue'
@@ -8,13 +8,19 @@ import Download from './icons/Download.vue'
 import GitHub from './icons/GitHub.vue'
 
 // @ts-ignore
-const props = defineProps(['store', 'dev', 'ssr'])
-const { store } = props
+const props = defineProps(['store', 'dev', 'ssr', 'autoUrl'])
+const { store, autoUrl } = props
+const emit = defineEmits(['update:autoUrl']);
 
 const currentCommit = __COMMIT__
 const activeVersion = ref(`@${currentCommit}`)
 const publishedVersions = ref<string[]>()
 const expanded = ref(false)
+
+const autoUrlRef = computed({
+  get: () => autoUrl,
+  set: value => emit("update:autoUrl", value)
+});
 
 async function toggle() {
   expanded.value = !expanded.value
@@ -97,6 +103,10 @@ async function fetchVersions(): Promise<string[]> {
       <span>Vue SFC Playground</span>
     </h1>
     <div class="links">
+      <div class="url-generation">
+        <input type="checkbox" v-model="autoUrlRef" id="auto-url">
+        <label for="auto-url">Auto URL</label>
+      </div>
       <div class="version" @click.stop>
         <span class="active-version" @click="toggle">
           Version
@@ -346,5 +356,16 @@ h1 img {
 
 .links > * + * {
   margin-left: 4px;
+}
+
+.url-generation {
+  display: flex;
+  flex-direction: row;
+  margin: 0 2px;
+  align-items: center;
+  gap: 2px;
+  border-right: 2px solid var(--border);
+  padding: 5px;
+  user-select: none;
 }
 </style>

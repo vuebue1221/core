@@ -47,8 +47,9 @@ const sfcOptions = {
   }
 }
 
-// persist state
+const autoUrl = ref(true);
 watchEffect(() => {
+  if(!autoUrl.value) return;
   const newHash = store
     .serialize()
     .replace(/^#/, useSSRMode.value ? `#__SSR__` : `#`)
@@ -79,6 +80,7 @@ function toggleSSR() {
     :ssr="useSSRMode"
     @toggle-dev="toggleDevMode"
     @toggle-ssr="toggleSSR"
+    v-model:auto-url="autoUrl"
   />
   <Repl
     @keydown.ctrl.s.prevent
