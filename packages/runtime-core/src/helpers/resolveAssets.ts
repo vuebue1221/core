@@ -6,7 +6,7 @@ import {
 } from '../component'
 import { currentRenderingInstance } from '../componentRenderContext'
 import { Directive } from '../directives'
-import {camelize, capitalize, isLateTag, isString} from '@vue/shared'
+import { camelize, capitalize, isLateTag, isString } from '@vue/shared'
 import { warn } from '../warning'
 import { VNodeTypes } from '../vnode'
 
@@ -113,15 +113,15 @@ function resolveAsset(
     }
 
     if (__DEV__ && warnMissing) {
-      const isResEmpty = !res;
-      const isNameLateTag = isLateTag(name);
+      const isResEmpty = !res
+      const isNameLateTag = isLateTag(name)
 
       if ((isResEmpty && !isNameLateTag) || (!isResEmpty && isNameLateTag)) {
         const extra =
-            type === COMPONENTS
-                ? `\nIf this is a native custom element, make sure to exclude it from ` +
-                `component resolution via compilerOptions.isCustomElement.`
-                : ``
+          type === COMPONENTS
+            ? `\nIf this is a native custom element, make sure to exclude it from ` +
+              `component resolution via compilerOptions.isCustomElement.`
+            : ``
         warn(`Failed to resolve ${type.slice(0, -1)}: ${name}${extra}`)
       }
     }
