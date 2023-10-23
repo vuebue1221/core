@@ -6,7 +6,7 @@ import {
 } from '../component'
 import { currentRenderingInstance } from '../componentRenderContext'
 import { Directive } from '../directives'
-import { camelize, capitalize, isString } from '@vue/shared'
+import {camelize, capitalize, isLateTag, isString} from '@vue/shared'
 import { warn } from '../warning'
 import { VNodeTypes } from '../vnode'
 
@@ -106,19 +106,24 @@ function resolveAsset(
       resolve(instance[type] || (Component as ComponentOptions)[type], name) ||
       // global registration
       resolve(instance.appContext[type], name)
-
+    debugger
     if (!res && maybeSelfReference) {
       // fallback to implicit self-reference
       return Component
     }
 
-    if (__DEV__ && warnMissing && !res) {
-      const extra =
-        type === COMPONENTS
-          ? `\nIf this is a native custom element, make sure to exclude it from ` +
-            `component resolution via compilerOptions.isCustomElement.`
-          : ``
-      warn(`Failed to resolve ${type.slice(0, -1)}: ${name}${extra}`)
+    if (__DEV__ && warnMissing) {
+      const isResEmpty = !res;
+      const isNameLateTag = isLateTag(name);
+
+      if ((isResEmpty && !isNameLateTag) || (!isResEmpty && isNameLateTag)) {
+        const extra =
+            type === COMPONENTS
+                ? `\nIf this is a native custom element, make sure to exclude it from ` +
+                `component resolution via compilerOptions.isCustomElement.`
+                : ``
+        warn(`Failed to resolve ${type.slice(0, -1)}: ${name}${extra}`)
+      }
     }
 
     return res
