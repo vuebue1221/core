@@ -106,7 +106,6 @@ function resolveAsset(
       resolve(instance[type] || (Component as ComponentOptions)[type], name) ||
       // global registration
       resolve(instance.appContext[type], name)
-    debugger
     if (!res && maybeSelfReference) {
       // fallback to implicit self-reference
       return Component
