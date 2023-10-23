@@ -111,18 +111,13 @@ function resolveAsset(
       return Component
     }
 
-    if (__DEV__ && warnMissing) {
-      const isResEmpty = !res
-      const isNameLateTag = isLateTag(name)
-
-      if ((isResEmpty && !isNameLateTag) || (!isResEmpty && isNameLateTag)) {
-        const extra =
+    if (__DEV__ && warnMissing && ((!res && !isLateTag(name)) || (res && isLateTag(name)))) {
+      const extra =
           type === COMPONENTS
-            ? `\nIf this is a native custom element, make sure to exclude it from ` +
+              ? `\nIf this is a native custom element, make sure to exclude it from ` +
               `component resolution via compilerOptions.isCustomElement.`
-            : ``
-        warn(`Failed to resolve ${type.slice(0, -1)}: ${name}${extra}`)
-      }
+              : ``
+      warn(`Failed to resolve ${type.slice(0, -1)}: ${name}${extra}`)
     }
 
     return res
