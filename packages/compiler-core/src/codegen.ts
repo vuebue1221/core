@@ -26,7 +26,8 @@ import {
   VNodeCall,
   SequenceExpression,
   getVNodeBlockHelper,
-  getVNodeHelper
+  getVNodeHelper,
+  getSetupReturnedHelper
 } from './ast'
 import { SourceMapGenerator, RawSourceMap } from 'source-map-js'
 import {
@@ -231,6 +232,8 @@ export function generate(
   if (!__BROWSER__ && options.bindingMetadata && !options.inline) {
     // binding optimization args
     args.push('$props', '$setup', '$data', '$options')
+    // Add helper 'getSetupReturnedHelper' for $setup
+    context.helper(getSetupReturnedHelper())
   }
   const signature =
     !__BROWSER__ && options.isTS

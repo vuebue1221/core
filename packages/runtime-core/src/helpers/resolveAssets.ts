@@ -141,3 +141,18 @@ function resolve(registry: Record<string, any> | undefined, name: string) {
       registry[capitalize(camelize(name))])
   )
 }
+
+/**
+ * @private
+ */
+export function resolveSetupReturned(name:string, setupReturn: any) {
+  if(!setupReturn) return name
+  const returnValue = setupReturn[name]
+  if(returnValue && returnValue.__file && isLateTag(name as string)){
+    const extra =
+      `\nIf this is a native custom element, make sure to exclude it from ` +
+        `component resolution via compilerOptions.isCustomElement.`
+    warn(`Failed to resolve component: ${name}${extra}`)
+  }
+  return returnValue
+}

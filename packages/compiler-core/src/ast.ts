@@ -11,7 +11,8 @@ import {
   CREATE_VNODE,
   CREATE_ELEMENT_VNODE,
   CREATE_BLOCK,
-  CREATE_ELEMENT_BLOCK
+  CREATE_ELEMENT_BLOCK,
+  RESOLVE_SETUP_RETURNED
 } from './runtimeHelpers'
 import { PropsExpression } from './transforms/transformElement'
 import { ImportItem, TransformContext } from './transform'
@@ -820,6 +821,10 @@ export function getVNodeHelper(ssr: boolean, isComponent: boolean) {
 
 export function getVNodeBlockHelper(ssr: boolean, isComponent: boolean) {
   return ssr || isComponent ? CREATE_BLOCK : CREATE_ELEMENT_BLOCK
+}
+
+export function getSetupReturnedHelper() {
+  return RESOLVE_SETUP_RETURNED
 }
 
 export function convertToBlock(

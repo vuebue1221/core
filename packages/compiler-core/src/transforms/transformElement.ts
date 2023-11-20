@@ -19,7 +19,8 @@ import {
   TemplateTextChildNode,
   DirectiveArguments,
   createVNodeCall,
-  ConstantTypes
+  ConstantTypes,
+  getSetupReturnedHelper
 } from '../ast'
 import {
   PatchFlags,
@@ -369,10 +370,11 @@ function resolveSetupReference(name: string, context: TransformContext) {
     checkType(BindingTypes.SETUP_REACTIVE_CONST) ||
     checkType(BindingTypes.LITERAL_CONST)
   if (fromConst) {
+    const helper = context.helperString
     return context.inline
       ? // in inline mode, const setup bindings (e.g. imports) can be used as-is
         fromConst
-      : `$setup[${JSON.stringify(fromConst)}]`
+      : `${helper(getSetupReturnedHelper())}(${JSON.stringify(fromConst)}, $setup)`
   }
 
   const fromMaybeRef =
