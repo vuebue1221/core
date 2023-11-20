@@ -116,11 +116,16 @@ function resolveAsset(
       warnMissing &&
       ((!res && !isLateTag(name)) || (res && isLateTag(name)))
     ) {
-      const extra =
-        type === COMPONENTS
-          ? `\nIf this is a native custom element, make sure to exclude it from ` +
+      let extra = ''
+      if (type === COMPONENTS) {
+        if (isLateTag(name)) {
+          extra = `\nplease do not use built-in tag names as component names.`
+        } else {
+          extra =
+            `\nIf this is a native custom element, make sure to exclude it from ` +
             `component resolution via compilerOptions.isCustomElement.`
-          : ``
+        }
+      }
       warn(`Failed to resolve ${type.slice(0, -1)}: ${name}${extra}`)
     }
 
@@ -145,14 +150,12 @@ function resolve(registry: Record<string, any> | undefined, name: string) {
 /**
  * @private
  */
-export function resolveSetupReturned(name:string, setupReturn: any) {
-  if(!setupReturn) return name
+export function resolveSetupReturned(name: string, setupReturn: any) {
+  if (!setupReturn) return name
   const returnValue = setupReturn[name]
-  if(returnValue && returnValue.__file && isLateTag(name as string)){
-    const extra =
-      `\nIf this is a native custom element, make sure to exclude it from ` +
-        `component resolution via compilerOptions.isCustomElement.`
-    warn(`Failed to resolve component: ${name}${extra}`)
+  if (returnValue && returnValue.__file && isLateTag(name as string)) {
+    const extra = `\nplease do not use built-in tag names as component names.`
+    warn(`Failed to resolve component: ${name},${extra}`)
   }
   return returnValue
 }
