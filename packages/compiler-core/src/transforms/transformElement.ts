@@ -374,7 +374,9 @@ function resolveSetupReference(name: string, context: TransformContext) {
     return context.inline
       ? // in inline mode, const setup bindings (e.g. imports) can be used as-is
         fromConst
-      : `${helper(getSetupReturnedHelper())}(${JSON.stringify(fromConst)}, $setup)`
+      : `${helper(getSetupReturnedHelper())}(${JSON.stringify(
+          fromConst
+        )}, $setup)`
   }
 
   const fromMaybeRef =
