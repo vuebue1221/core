@@ -406,7 +406,6 @@ export interface DataHTMLAttributes extends HTMLAttributes {
 
 export interface DetailsHTMLAttributes extends HTMLAttributes {
   open?: Booleanish
-  onToggle?: Event
 }
 
 export interface DelHTMLAttributes extends HTMLAttributes {
@@ -1291,12 +1290,18 @@ export interface Events {
   onBlur: FocusEvent
 
   // form events
+  onCancel: Event
   onChange: Event
-  onBeforeinput: Event
-  onInput: Event
+  onBeforeinput: InputEvent
+  onFormdata: FormDataEvent
+  onInput: InputEvent
   onReset: Event
-  onSubmit: Event
+  onSubmit: SubmitEvent
   onInvalid: Event
+
+  // fullscreen events
+  onFullscreenchange: Event
+  onFullscreenerror: Event
 
   // image events
   onLoad: Event
@@ -1308,9 +1313,6 @@ export interface Events {
   onKeyup: KeyboardEvent
 
   // mouse events
-  onAuxclick: MouseEvent
-  onClick: MouseEvent
-  onContextmenu: MouseEvent
   onDblclick: MouseEvent
   onMousedown: MouseEvent
   onMouseenter: MouseEvent
@@ -1326,7 +1328,7 @@ export interface Events {
   onCanplaythrough: Event
   onDurationchange: Event
   onEmptied: Event
-  onEncrypted: Event
+  onEncrypted: MediaEncryptedEvent
   onEnded: Event
   onLoadeddata: Event
   onLoadedmetadata: Event
@@ -1348,7 +1350,8 @@ export interface Events {
   onSelect: Event
 
   // UI events
-  onScroll: UIEvent
+  onScroll: Event
+  onScrollend: Event
 
   // touch events
   onTouchcancel: TouchEvent
@@ -1357,6 +1360,11 @@ export interface Events {
   onTouchstart: TouchEvent
 
   // pointer events
+  onAuxclick: PointerEvent
+  onClick: PointerEvent
+  onContextmenu: PointerEvent
+  onGotpointercapture: PointerEvent
+  onLostpointercapture: PointerEvent
   onPointerdown: PointerEvent
   onPointermove: PointerEvent
   onPointerup: PointerEvent
@@ -1366,16 +1374,26 @@ export interface Events {
   onPointerover: PointerEvent
   onPointerout: PointerEvent
 
+  // popover events
+  onBeforetoggle: ToggleEvent
+  onToggle: ToggleEvent
+
   // wheel events
   onWheel: WheelEvent
 
   // animation events
+  onAnimationcancel: AnimationEvent
   onAnimationstart: AnimationEvent
   onAnimationend: AnimationEvent
   onAnimationiteration: AnimationEvent
 
+  // security policy events
+  onSecuritypolicyviolation: SecurityPolicyViolationEvent
+
   // transition events
+  onTransitioncancel: TransitionEvent
   onTransitionend: TransitionEvent
+  onTransitionrun: TransitionEvent
   onTransitionstart: TransitionEvent
 }
 
