@@ -1298,6 +1298,20 @@ describe('api: watch', () => {
     expect(countW).toBe(2)
   })
 
+  // #3341
+  test('watchEffect should allow multiple onCleanup calls', async () => {
+    const spy1 = vi.fn()
+    const spy2 = vi.fn()
+    const stop = watchEffect(onCleanup => {
+      onCleanup(spy1)
+      onCleanup(spy1)
+      onCleanup(spy2)
+    })
+    stop()
+    expect(spy1).toHaveBeenCalledTimes(1)
+    expect(spy2).toHaveBeenCalledTimes(1)
+  })
+
   // #5151
   test('OnCleanup also needs to be cleaned，', async () => {
     const spy1 = vi.fn()
@@ -1329,6 +1343,7 @@ describe('api: watch', () => {
     num.value++
     await nextTick()
     // would not be calld when value>1
+
     expect(spy1).toHaveBeenCalledTimes(1)
     expect(spy2).toHaveBeenCalledTimes(1)
   })
