@@ -9,9 +9,9 @@ import {
   OPEN_BLOCK,
   type RENDER_LIST,
   type RENDER_SLOT,
+  RESOLVE_SETUP_RETURNED,
   WITH_DIRECTIVES,
   type WITH_MEMO,
-  RESOLVE_SETUP_RETURNED
 } from './runtimeHelpers'
 import type { PropsExpression } from './transforms/transformElement'
 import type { ImportItem, TransformContext } from './transform'

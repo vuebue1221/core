@@ -24,10 +24,10 @@ import {
   type TemplateLiteral,
   type TextNode,
   type VNodeCall,
+  getSetupReturnedHelper,
   getVNodeBlockHelper,
   getVNodeHelper,
   locStub,
-  getSetupReturnedHelper
 } from './ast'
 import { type RawSourceMap, SourceMapGenerator } from 'source-map-js'
 import {

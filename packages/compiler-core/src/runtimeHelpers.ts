@@ -13,7 +13,7 @@ export const CREATE_TEXT = Symbol(__DEV__ ? `createTextVNode` : ``)
 export const CREATE_STATIC = Symbol(__DEV__ ? `createStaticVNode` : ``)
 export const RESOLVE_COMPONENT = Symbol(__DEV__ ? `resolveComponent` : ``)
 export const RESOLVE_SETUP_RETURNED = Symbol(
-  __DEV__ ? `resolveSetupReturned` : ``
+  __DEV__ ? `resolveSetupReturned` : ``,
 )
 export const RESOLVE_DYNAMIC_COMPONENT = Symbol(
   __DEV__ ? `resolveDynamicComponent` : ``,

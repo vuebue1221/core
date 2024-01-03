@@ -21,7 +21,7 @@ import {
   createObjectProperty,
   createSimpleExpression,
   createVNodeCall,
-  getSetupReturnedHelper
+  getSetupReturnedHelper,
 } from '../ast'
 import {
   PatchFlagNames,
@@ -361,7 +361,7 @@ function resolveSetupReference(name: string, context: TransformContext) {
       ? // in inline mode, const setup bindings (e.g. imports) can be used as-is
         fromConst
       : `${helper(getSetupReturnedHelper())}(${JSON.stringify(
-          fromConst
+          fromConst,
         )}, $setup)`
   }
 

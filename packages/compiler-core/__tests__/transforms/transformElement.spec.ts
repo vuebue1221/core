@@ -101,8 +101,8 @@ describe('compiler: element transform', () => {
   test('resolve component from setup bindings & component', () => {
     const { root, node } = parseWithElementTransform(`<Example/>`, {
       bindingMetadata: {
-        Example: BindingTypes.SETUP_CONST
-      }
+        Example: BindingTypes.SETUP_CONST,
+      },
     })
     expect(root.helpers).not.toContain(RESOLVE_COMPONENT)
     expect(node.tag).toBe(`_resolveSetupReturned("Example", $setup)`)
