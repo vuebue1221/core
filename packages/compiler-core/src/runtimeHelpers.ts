@@ -16,7 +16,7 @@ export const RESOLVE_SETUP_RETURNED = Symbol(
   __DEV__ ? `resolveSetupReturned` : ``
 )
 export const RESOLVE_DYNAMIC_COMPONENT = Symbol(
-  __DEV__ ? `resolveDynamicComponent` : ``
+  __DEV__ ? `resolveDynamicComponent` : ``,
 )
 export const RESOLVE_DIRECTIVE = Symbol(__DEV__ ? `resolveDirective` : ``)
 export const RESOLVE_FILTER = Symbol(__DEV__ ? `resolveFilter` : ``)
@@ -85,7 +85,7 @@ export const helperNameMap: Record<symbol, string> = {
   [UNREF]: `unref`,
   [IS_REF]: `isRef`,
   [WITH_MEMO]: `withMemo`,
-  [IS_MEMO_SAME]: `isMemoSame`
+  [IS_MEMO_SAME]: `isMemoSame`,
 }
 
 export function registerRuntimeHelpers(helpers: Record<symbol, string>) {
