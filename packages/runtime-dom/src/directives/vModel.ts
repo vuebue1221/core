@@ -50,15 +50,19 @@ export const vModelText: ModelDirective<
 > = {
   created(el, { modifiers: { lazy, trim, number } }, vnode) {
     el[assignKey] = getModelAssigner(vnode)
-    const castToNumber =
-      number || (vnode.props && vnode.props.type === 'number')
+    const vnodeType = vnode.props && vnode.props.type
+    const castToNumber = number || vnodeType === 'number'
+    const castToTimeStamp =
+      number && (vnodeType === 'date' || vnodeType === 'datetime-local')
     addEventListener(el, lazy ? 'change' : 'input', e => {
       if ((e.target as any).composing) return
       let domValue: string | number = el.value
       if (trim) {
         domValue = domValue.trim()
       }
-      if (castToNumber) {
+      if (castToTimeStamp) {
+        domValue = new Date(domValue).getTime()
+      } else if (castToNumber) {
         domValue = looseToNumber(domValue)
       }
       el[assignKey](domValue)
@@ -101,6 +105,11 @@ export const vModelText: ModelDirective<
       }
       if (trim && el.value.trim() === newValue) {
         return
+      }
+      if (number && (el.type === 'date' || el.type === 'datetime-local')) {
+        if (new Date(el.value).getTime() === value) {
+          return
+        }
       }
     }
 
