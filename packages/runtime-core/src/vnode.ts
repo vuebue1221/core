@@ -5,7 +5,9 @@ import {
   SlotFlags,
   extend,
   isArray,
+  isBoolean,
   isFunction,
+  isNumber,
   isObject,
   isOn,
   isString,
@@ -437,7 +439,7 @@ const normalizeRef = ({
   ref_key,
   ref_for,
 }: VNodeProps): VNodeNormalizedRefAtom | null => {
-  if (typeof ref === 'number') {
+  if (isNumber(ref)) {
     ref = '' + ref
   }
   return (
@@ -778,7 +780,7 @@ export function createCommentVNode(
 }
 
 export function normalizeVNode(child: VNodeChild): VNode {
-  if (child == null || typeof child === 'boolean') {
+  if (child == null || isBoolean(child)) {
     // empty placeholder
     return createVNode(Comment)
   } else if (isArray(child)) {
